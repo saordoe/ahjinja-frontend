@@ -1,12 +1,6 @@
-import React from "react";
-import { View, Text, Image, StyleSheet, ScrollView, FlatList } from "react-native";
-import buttons from "assets/images/buttons.png";
-import heart from "../../assets/images/heart.svg";
-import home from "../../assets/images/home.svg";
-import icon from "../../assets/images/icon.svg";
-import image from "../../assets/images/image.svg";
-import liked from "../../assets/images/liked.svg";
-// var imageVar = require('../../assets/images/image.svg');
+import React, { useState, useEffect } from 'react';
+import { View, Text, Image, TextInput, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+
 
 const data = [
   {
