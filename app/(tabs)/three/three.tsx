@@ -6,10 +6,18 @@ import FilterButton from '@/components/uiComponents/FilterButton';
 import CardTemplate from '@/components/uiComponents/CardTemplate';
 import { useLikedCards } from '@/contexts/LikedCardsContext'; 
 import { CardTemplates } from '@/components/CardTemplates';
+import { Link, Href } from 'expo-router';
 
 export default function TabThreeScreen() {
   const [name, setName] = useState('');
+  const [type, setType] = useState<String>('all');
   const { likedCards, handleLike } = useLikedCards();
+
+  const filteredCards = CardTemplates.filter((template) => type == 'all' || template.type == type);
+
+  const handleTypeChange = (type: String) => {
+    setType(type);
+  }
 
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer}>
@@ -24,9 +32,11 @@ export default function TabThreeScreen() {
         <View style={styles.icons__rightcontainer}>
           <Text style={styles.name}>{name ? `${name}'s Closet` : "Name's Closet"}</Text>
           <View style={styles.buttons__container}>
-            <View style={styles.add__button}>
-              <MaterialCommunityIcons style={styles.plus__sign} name="plus" size={32} color='black' />
-            </View>
+            <Link href='/three/uploadone'>
+              <View style={styles.add__button}>
+                <MaterialCommunityIcons style={styles.plus__sign} name="plus" size={32} color='black' />
+              </View>
+            </Link>
             <View style={styles.outfits__button}></View>
           </View>
         </View>
@@ -37,7 +47,7 @@ export default function TabThreeScreen() {
           color="#7C7777"
           text="All"
           onPress={() => {
-            console.log('Button pressed!'); //temporary, will later filter the clothes to show all
+            handleTypeChange('all');
           }}
         />
         <FilterButton
@@ -45,7 +55,7 @@ export default function TabThreeScreen() {
           color="#7C7777"
           text="Top"
           onPress={() => {
-            console.log('Button pressed!'); //temporary, will later filter the clothes to show tops
+            handleTypeChange('top');
           }}
         />
         <FilterButton
@@ -53,7 +63,7 @@ export default function TabThreeScreen() {
           color="#7C7777"
           text="Bottom"
           onPress={() => {
-            console.log('Button pressed!');
+            handleTypeChange('bottom');
           }}
         />
         <FilterButton
@@ -61,12 +71,12 @@ export default function TabThreeScreen() {
           color="#7C7777"
           text="All"
           onPress={() => {
-            console.log('Button pressed!');
+            handleTypeChange('all');
           }}
         />
       </View>
       <View style={styles.cards__container}>
-          {CardTemplates.map((template) => (
+          {filteredCards.map((template) => (
             <View style={styles.cards__grid}>
             <CardTemplate
               key={template.id}

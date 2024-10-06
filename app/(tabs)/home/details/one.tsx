@@ -1,10 +1,11 @@
 import { View, Text } from 'react-native'
 import React from 'react'
+import DetailScreen from '@/app/newScreens/detail'
 
 const one = () => {
   return (
     <View>
-      <Text>details</Text>
+      <Text>One</Text>
     </View>
   )
 }
