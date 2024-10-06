@@ -15,7 +15,7 @@ export const LikeMenu = (): JSX.Element => {
               <View key={template.id} style={styles.cards__grid}>
                 <CardTemplate
                   id={template.id}
-                  companyName={template.companyName}
+                  companyName=''
                   imageSource={template.imageSource}
                   onLike={handleLike}
                   liked={likedCards[template.id] || false}
