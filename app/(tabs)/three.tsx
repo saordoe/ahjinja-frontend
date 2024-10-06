@@ -3,6 +3,8 @@ import { useState } from 'react';
 
 import EditScreenInfo from '@/components/EditScreenInfo';
 import { Text, View } from '@/components/Themed';
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+import FilterButton from '@/components/uiComponents/FilterButton';
 
 
 export default function TabThreeScreen() {
@@ -23,11 +25,45 @@ export default function TabThreeScreen() {
           <Text style={styles.name}>{name ? `${name}'s Closet` : "Name's Closet"}</Text>
           <View style={styles.buttons__container}>
             <View style={styles.add__button}>
-              
+              <MaterialCommunityIcons style={styles.plus__sign} name="plus" size={32} color='black'/>
             </View>
             <View style={styles.outfits__button}></View>
           </View>
         </View>
+      </View>
+      <View style={styles.filter__bar}>
+        <FilterButton
+          size="medium"
+          color="#7C7777"
+          text="All"
+          onPress={() => {
+            console.log('Button pressed!');
+          }}
+        />
+        <FilterButton
+          size="medium"
+          color="#7C7777"
+          text="Top"
+          onPress={() => {
+            console.log('Button pressed!');
+          }}
+        />
+        <FilterButton
+          size="medium"
+          color="#7C7777"
+          text="Bottom"
+          onPress={() => {
+            console.log('Button pressed!');
+          }}
+        />
+        <FilterButton
+          size="medium"
+          color="#7C7777"
+          text="All"
+          onPress={() => {
+            console.log('Button pressed!');
+          }}
+        />
       </View>
     </View>
   );
@@ -66,6 +102,12 @@ const styles = StyleSheet.create({
     borderRadius: 20, // half of the diameter to make it a circle
     backgroundColor: '#EFEFEF', // color of the circle
     marginRight: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  plus__sign: {
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   outfits__button: {
     width: 90, // diameter of the circle
@@ -79,7 +121,6 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
   },
-  
   name: {
     marginTop: 10,
     fontSize: 20,
@@ -91,5 +132,12 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     width: '80%',
     paddingHorizontal: 10,
+  },
+  filter__bar: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '88%',
+    marginTop: 20,
   },
 });
