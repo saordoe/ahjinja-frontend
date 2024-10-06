@@ -1,11 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, Image, StyleSheet, ScrollView, TouchableOpacity, Pressable } from "react-native";
+import CardTemplate from '@/components/uiComponents/CardTemplate';
 import { useBookmark } from '@/contexts/BookmarkContext';
 import { CardTemplates } from '../CardTemplates';
 
 export const OutfitMenu = (): JSX.Element => {
     const { bookmarkedItems, handleBookmark } = useBookmark();
     const filteredOutfits = [];
+
+
+    const doNothing = (id: string) => {
+
+    }
 
     for (let i = 0; i < bookmarkedItems.length; i++) {
         if (bookmarkedItems[i].value) {
@@ -35,6 +41,29 @@ export const OutfitMenu = (): JSX.Element => {
             </TouchableOpacity>
             <Text style={styles.title}>Outfits</Text>
         </View>
+
+        {filteredOutfits.map((arr) => (
+            <View>
+              <View key={arr[0].id} style={styles.cards__grid}>
+                <CardTemplate
+                  id={arr[0].id}
+                  companyName={arr[0].companyName}
+                  imageSource={arr[0].imageSource}
+                  onLike={handleBookmark}
+                  liked={bookmarkedItems[arr[0].id] || false}
+                />
+              </View>
+                <View key={arr[1].id} style={styles.cards__grid}>
+                            <CardTemplate
+                              id={arr[1].id}
+                              companyName={arr[1].companyName}
+                              imageSource={arr[1].imageSource}
+                              onLike={handleBookmark}
+                              liked={bookmarkedItems[arr[1].id] || false}
+                            />
+                          </View>
+            </View>
+            ))}
 
         <Text style={styles.title}>outfit 1: </Text>
         <View style={styles.combo}>
@@ -182,6 +211,11 @@ const styles = StyleSheet.create({
     fontSize: 15,             // Text size
     fontWeight: 'bold',       // Bold text
     marginRight: 10,
+  },
+  cards__grid: {
+    justifyContent: 'center',
+    width: '45%',
+    marginBottom: 10,
   },
 });
 
