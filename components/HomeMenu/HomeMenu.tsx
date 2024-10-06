@@ -162,7 +162,7 @@ const styles = StyleSheet.create({
     height: undefined,
     aspectRatio: 1,
     borderRadius: 20,
-    resizeMode: 'contain'
+    resizeMode: 'cover'
   },
 
   cardText: {
@@ -190,10 +190,10 @@ const styles = StyleSheet.create({
   },
   heartIcon: {
     position: 'absolute', // Absolute positioning for the heart icon
-    top: 10, // Position it near the top
+    top: 25, // Position it near the top
     right: 10, // Position it near the right edge
-    width: 20, // Size of the heart icon
-    height: 20,
+    width: 30, // Size of the heart icon
+    height: 30,
     zIndex: 1, // Ensures it appears on top of the card
 
 
@@ -201,7 +201,7 @@ const styles = StyleSheet.create({
   heartIconContainer: {
     position: 'absolute', // Absolute positioning for the heart icon
     top: 10, // Position it inside the card, near the top
-    right: 10, // Position it inside the card, near the right edge
+    right:0, // Position it inside the card, near the right edge
     zIndex: 1, // Ensures it appears on top of the card
   },
 });
@@ -213,7 +213,7 @@ export const Card = ({ companyName, imageSource, onLike, liked }: { companyName:
       <Image style={styles.cardImage} source={imageSource} />
       <TouchableOpacity onPress={onLike} style={styles.heartIconContainer}>
         <Image
-          source={liked ? require('../../assets/images/heart.png') : require('../../assets/images/whiteheart.png')} 
+          source={liked ? require('../../assets/images/filled.png') : require('../../assets/images/whiteheart.png')} 
           style={styles.heartIcon}
         />
       </TouchableOpacity>

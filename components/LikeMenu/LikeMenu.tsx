@@ -102,10 +102,10 @@ const styles = StyleSheet.create({
   },
   heartIcon: {
     position: 'absolute', // Absolute positioning for the heart icon
-    top: 10, // Position it near the top
-    right: 10, // Position it near the right edge
-    width: 20, // Size of the heart icon
-    height: 20,
+    top: 22, // Position it near the top
+    right: 25, // Position it near the right edge
+    width: 25, // Size of the heart icon
+    height: 25,
     zIndex: 1, // Ensures it appears on top of the card
 
   },
@@ -115,7 +115,7 @@ export const Card = ({ imageSource }: { imageSource: any }): JSX.Element => {
   return (
     <View style={styles.card}>
       <Image style={styles.cardImage} source={imageSource} />
-      <Image source={require('../../assets/images/heart.png')} style={styles.heartIcon} />
+      <Image source={require('../../assets/images/filled.png')} style={styles.heartIcon} />
     </View>
   );
 };
