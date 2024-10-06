@@ -9,7 +9,14 @@ import { CardTemplates } from '@/components/CardTemplates';
 
 export default function TabThreeScreen() {
   const [name, setName] = useState('');
+  const [type, setType] = useState<String>('all');
   const { likedCards, handleLike } = useLikedCards();
+
+  const filteredCards = CardTemplates.filter((template) => type == 'all' || template.type == type);
+
+  const handleTypeChange = (type: String) => {
+    setType(type);
+  }
 
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer}>
@@ -37,7 +44,7 @@ export default function TabThreeScreen() {
           color="#7C7777"
           text="All"
           onPress={() => {
-            console.log('Button pressed!'); //temporary, will later filter the clothes to show all
+            handleTypeChange('all');
           }}
         />
         <FilterButton
@@ -45,7 +52,7 @@ export default function TabThreeScreen() {
           color="#7C7777"
           text="Top"
           onPress={() => {
-            console.log('Button pressed!'); //temporary, will later filter the clothes to show tops
+            handleTypeChange('top');
           }}
         />
         <FilterButton
@@ -53,7 +60,7 @@ export default function TabThreeScreen() {
           color="#7C7777"
           text="Bottom"
           onPress={() => {
-            console.log('Button pressed!');
+            handleTypeChange('bottom');
           }}
         />
         <FilterButton
@@ -61,12 +68,12 @@ export default function TabThreeScreen() {
           color="#7C7777"
           text="All"
           onPress={() => {
-            console.log('Button pressed!');
+            handleTypeChange('all');
           }}
         />
       </View>
       <View style={styles.cards__container}>
-          {CardTemplates.map((template) => (
+          {filteredCards.map((template) => (
             <View style={styles.cards__grid}>
             <CardTemplate
               key={template.id}
