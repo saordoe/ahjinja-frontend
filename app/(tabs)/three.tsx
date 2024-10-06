@@ -10,9 +10,14 @@ export default function TabThreeScreen() {
   const [liked, setLiked] = useState(false); // State to track if the card is liked
 
   // Toggle the like status
-  const handleLike = () => {
-    setLiked((prevLiked) => !prevLiked);
+  const handleLike = (id: string) => {
+    setLikedCards((prevState) => ({
+      ...prevState,
+      [id]: !prevState[id], // Toggle liked state for the specific card
+    }));
   };
+
+  const [likedCards, setLikedCards] = useState<{ [key: string]: boolean }>({});
 
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer}>
@@ -71,33 +76,30 @@ export default function TabThreeScreen() {
       <View style={styles.cards__container}>
         <View style={styles.cards__row}>
           <CardTemplate
+            id="1"
             companyName="lololol"
             imageSource={require('../../assets/images/cropped.png')}
             onLike={handleLike}
-            liked={liked}
+            liked={likedCards['1'] || false} // Default to false if not liked
           />
           <CardTemplate
+            id="2"
             companyName="lololol"
             imageSource={require('../../assets/images/cropped.png')}
             onLike={handleLike}
-            liked={liked}
+            liked={likedCards['2'] || false} // Default to false if not liked
           />
         </View>
         <View style={styles.cards__row}>
           <CardTemplate
+            id="3"
             companyName="lololol"
             imageSource={require('../../assets/images/cropped.png')}
             onLike={handleLike}
-            liked={liked}
-          />
-          <CardTemplate
-            companyName="lololol"
-            imageSource={require('../../assets/images/cropped.png')}
-            onLike={handleLike}
-            liked={liked}
+            liked={likedCards['3'] || false} // Default to false if not liked
           />
         </View>
-      </View>
+    </View>
     </ScrollView>
   );
 }
