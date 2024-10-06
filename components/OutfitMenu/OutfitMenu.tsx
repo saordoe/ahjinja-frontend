@@ -1,8 +1,29 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, Image, StyleSheet, ScrollView, TouchableOpacity, Pressable } from "react-native";
+import { useBookmark } from '@/contexts/BookmarkContext';
+import { CardTemplates } from '../CardTemplates';
 
 export const OutfitMenu = (): JSX.Element => {
- 
+    const { bookmarkedItems, handleBookmark } = useBookmark();
+    const filteredOutfits = [];
+
+    for (let i = 0; i < bookmarkedItems.length; i++) {
+        if (bookmarkedItems[i].value) {
+            let stringArr = bookmarkedItems[i].key.split(" ");
+            CardTemplates.forEach((it, index) => {
+                if (stringArr[0] == it.id) {
+                    stringArr[0] = it;
+                }
+            });
+            CardTemplates.forEach((it, index) => {
+                if (stringArr[1] == it.id) {
+                    stringArr[1] = it;
+                }
+            });
+            filteredOutfits.push(stringArr);
+        }
+    };
+    
   return (
     <ScrollView contentContainerStyle={styles.homeMenu}>
         <View style={styles.top}>

@@ -6,6 +6,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 import 'react-native-reanimated';
 import { LikedCardsProvider } from '@/contexts/LikedCardsContext';
+import { BookmarkProvider } from '@/contexts/BookmarkContext';
 
 import { useColorScheme } from '@/components/useColorScheme';
 
@@ -50,13 +51,15 @@ function RootLayoutNav() {
   const colorScheme = useColorScheme();
 
   return (
+    <BookmarkProvider>
     <LikedCardsProvider>
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
-      </Stack>
-    </ThemeProvider>
+      <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+        <Stack>
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
+        </Stack>
+      </ThemeProvider>
     </LikedCardsProvider>
+    </BookmarkProvider>
   );
 }
