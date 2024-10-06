@@ -78,7 +78,7 @@ export default function TabThreeScreen() {
             <CardTemplate
               key={template.id}
               id={template.id}
-              companyName={template.companyName}
+              companyName=''
               imageSource={template.imageSource}
               onLike={handleLike}
               liked={likedCards[template.id] || false}
