@@ -2,18 +2,19 @@ import React from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 
 interface CardProps {
+  id: string;
   companyName: string;
   imageSource: any;
-  onLike: () => void;
+  onLike: (id: string) => void;
   liked: boolean;
 }
 
-const CardTemplate = ({ companyName, imageSource, onLike, liked }: CardProps): JSX.Element => {
+const CardTemplate = ({ id, companyName, imageSource, onLike, liked }: CardProps): JSX.Element => {
   return (
     <View style={styles.card}>
       <Text style={styles.cardText}>@ {companyName}</Text>
       <Image style={styles.cardImage} source={imageSource} />
-      <TouchableOpacity onPress={onLike} style={styles.heartIconContainer}>
+      <TouchableOpacity onPress={() => onLike(id)} style={styles.heartIconContainer}>
         <Image
           source={liked ? require('../../assets/images/filled.png') : require('../../assets/images/whiteheart.png')}
           style={styles.heartIcon}
@@ -28,6 +29,9 @@ export default CardTemplate;
 
 // Styles for the Card component
 const styles = StyleSheet.create({
+  cards__container: {
+    flexDirection: 'column',
+  },
   card: {
     margin: 5,
     alignItems: 'flex-start',
