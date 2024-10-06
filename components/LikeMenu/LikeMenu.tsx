@@ -47,7 +47,6 @@ const styles = StyleSheet.create({
     //width: '45%', 
     alignItems: 'flex-start',     // Centers the content of each item horizontally
     justifyContent: 'center', 
-    paddingLeft: 5,
     overflow: 'visible', 
     padding: 15, // Increased padding inside each card
     
@@ -68,7 +67,7 @@ const styles = StyleSheet.create({
   },
   heartIcon: {
     position: 'absolute', // Absolute positioning for the heart icon
-    top: 22, // Position it near the top
+    top: 30, // Position it near the top
     right: 25, // Position it near the right edge
     width: 25, // Size of the heart icon
     height: 25,

@@ -5,7 +5,7 @@ import { DetailMenu } from '@/components/DetailMenu/DetailMenu';
 export default function DetailScreen() {
   return (
     <View style={styles.container}>
-      <DetailMenu />
+      <DetailMenu></DetailMenu>
     </View>
   );
 }

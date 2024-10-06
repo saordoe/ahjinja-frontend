@@ -1,10 +1,11 @@
 import { View, Text } from 'react-native'
 import React from 'react'
+import { DetailMenu } from '@/components/DetailMenu/DetailMenu'
 
 const two = () => {
   return (
     <View>
-      <Text>two</Text>
+      <DetailMenu />
     </View>
   )
 }

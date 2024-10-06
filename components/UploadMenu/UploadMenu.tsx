@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, Image, StyleSheet, ScrollView, TouchableOpacity, Pressable, Alert } from "react-native";
 import * as ImagePicker from 'expo-image-picker';
+import { Link } from 'expo-router';
 
 
 export const UploadMenu = (): JSX.Element => {
@@ -33,25 +34,29 @@ export const UploadMenu = (): JSX.Element => {
   return (
     <ScrollView contentContainerStyle={styles.homeMenu}>
         <View style={styles.top}>
-            
-            <TouchableOpacity onPress={() => {console.log('Back Button pressed!');}} style={styles.backContainer}>
+            <Link href='/(tabs)/three'>
                 <Image
                 source={require('../../assets/images/back.png')} 
                 style={styles.backIcon}
                 />
-            </TouchableOpacity>
+            </Link>
             <Text style={styles.title}>Upload</Text>
         </View>
 
         <TouchableOpacity style={styles.bigButton} onPress={handleImageUpload}>
+            {selectedImage ? (
+            <Image source={{ uri: selectedImage }} style={styles.big} />
+        ) : (
             <Image
                     source={require('../../assets/images/upload.png')} 
                     style={styles.big}
             />
+        )}
+            
         </TouchableOpacity>
         
         
-        <TouchableOpacity style={styles.button} onPress={() => alert('Button Pressed!')}>
+        <TouchableOpacity style={styles.button} onPress={() => alert('Saved to closet!')}>
             <Text style={styles.buttonText}>Save</Text>
             <Image
                 source={require('../../assets/images/arrow.png')} 
@@ -67,7 +72,8 @@ export const UploadMenu = (): JSX.Element => {
 const styles = StyleSheet.create({
   homeMenu: {
     width: "100%",
-    padding: "7%"
+    padding: "7%",
+    height: "100%"
   },
   top:{
     flexDirection: 'row',           // Align items in a row (horizontally)
@@ -106,7 +112,7 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: "#BBBBBB",
     borderRadius: 15,
-    marginTop: "50%",
+    marginTop: "45%",
     marginBottom: "5%",
     alignItems: "center"
   },
@@ -130,8 +136,8 @@ const styles = StyleSheet.create({
   },
   button: {
     position: 'absolute',     // Position the button absolutely
-    bottom: "-42%",               // Distance from the bottom (adjust as needed)
-    right:"10%",                 // Distance from the left side (adjust as needed)
+    bottom: "7%",               // Distance from the bottom (adjust as needed)
+    right:"12%",                 // Distance from the left side (adjust as needed)
     backgroundColor: '#888888', // Button background color (blue in this case)
     paddingVertical: 10,      // Vertical padding for button content
     paddingHorizontal: 15,    // Horizontal padding for button content

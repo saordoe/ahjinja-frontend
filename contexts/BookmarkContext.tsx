@@ -8,7 +8,7 @@ export const BookmarkProvider = ({ children }: { children: React.ReactNode }) =>
   const handleBookmark = (id: string) => {
     setBookmarkedItems((prevState) => ({
       ...prevState,
-      [id]: !prevState[id],
+      [id]: prevState[id] ? false : true,
     }));
   };
 

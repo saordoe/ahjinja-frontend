@@ -1,56 +1,63 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Image, StyleSheet, ScrollView, TouchableOpacity, Pressable } from "react-native";
+import { View, Text, Image, StyleSheet, ScrollView, TouchableOpacity, Pressable, } from "react-native";
 import CardTemplate from '@/components/uiComponents/CardTemplate';
 import { useBookmark } from '@/contexts/BookmarkContext';
 import { CardTemplates } from '../CardTemplates';
+import { useLikedCards } from '@/contexts/LikedCardsContext'; 
+import { Link } from 'expo-router';
 
 export const OutfitMenu = (): JSX.Element => {
     const { bookmarkedItems, handleBookmark } = useBookmark();
-    const filteredOutfits = [];
+    const { likedCards, handleLike } = useLikedCards();
+    const filteredOutfits = [];   
 
+    for (let key in bookmarkedItems) {
+        if (bookmarkedItems[key]) { // Check if the item is bookmarked (true)
+          console.log(key); // Log the key instead of i
+      
+          let stringArr = key.split(" ");
+          console.log(stringArr);
+          let temp: { id: string; type: string; companyName: string; imageSource: any; }[] = [];
 
-    const doNothing = (id: string) => {
-
-    }
-
-    for (let i = 0; i < bookmarkedItems.length; i++) {
-        if (bookmarkedItems[i].value) {
-            let stringArr = bookmarkedItems[i].key.split(" ");
-            CardTemplates.forEach((it, index) => {
-                if (stringArr[0] == it.id) {
-                    stringArr[0] = it;
-                }
-            });
-            CardTemplates.forEach((it, index) => {
-                if (stringArr[1] == it.id) {
-                    stringArr[1] = it;
-                }
-            });
-            filteredOutfits.push(stringArr);
+        
+      
+          CardTemplates.forEach((it, index) => {
+            if (stringArr[0] === it.id ) {
+              temp[0] = it;
+            }
+          });
+      
+          CardTemplates.forEach((it, index) => {
+            if (stringArr[1] === it.id) {
+              temp[1] = it;
+            }
+          });
+      
+          filteredOutfits.push(temp);
         }
-    };
+      }
     
   return (
     <ScrollView contentContainerStyle={styles.homeMenu}>
         <View style={styles.top}>
-            <TouchableOpacity onPress={() => {console.log('Back Button pressed!');}} >
+            <Link href='/(tabs)/three'>
                 <Image
                 source={require('../../assets/images/back.png')} 
                 style={styles.backIcon}
                 />
-            </TouchableOpacity>
+            </Link>
             <Text style={styles.title}>Outfits</Text>
         </View>
 
         {filteredOutfits.map((arr) => (
-            <View>
+            <View style={styles.out}>
               <View key={arr[0].id} style={styles.cards__grid}>
                 <CardTemplate
                   id={arr[0].id}
                   companyName={arr[0].companyName}
                   imageSource={arr[0].imageSource}
-                  onLike={handleBookmark}
-                  liked={bookmarkedItems[arr[0].id] || false}
+                  onLike={handleLike}
+                  liked={likedCards[arr[0].id] || false}
                 />
               </View>
                 <View key={arr[1].id} style={styles.cards__grid}>
@@ -58,92 +65,14 @@ export const OutfitMenu = (): JSX.Element => {
                               id={arr[1].id}
                               companyName={arr[1].companyName}
                               imageSource={arr[1].imageSource}
-                              onLike={handleBookmark}
-                              liked={bookmarkedItems[arr[1].id] || false}
+                              onLike={handleLike}
+                              liked={likedCards[arr[1].id] || false}
                             />
                           </View>
             </View>
             ))}
 
-        <Text style={styles.title}>outfit 1: </Text>
-        <View style={styles.combo}>
-            <Image
-                source={require('../../assets/images/cropped.png')} 
-                style={styles.piece}
-            />
-            <Image
-                source={require('../../assets/images/cropped.png')} 
-                style={styles.piece}
-            />
-            <Image
-                source={require('../../assets/images/cropped.png')} 
-                style={styles.piece}
-            />
-        </View>
-
-        <Text style={styles.title}>outfit 2: </Text>
-        <View style={styles.combo}>
-            <Image
-                source={require('../../assets/images/cropped.png')} 
-                style={styles.piece}
-            />
-            <Image
-                source={require('../../assets/images/cropped.png')} 
-                style={styles.piece}
-            />
-            <Image
-                source={require('../../assets/images/cropped.png')} 
-                style={styles.piece}
-            />
-        </View>
-
-        <Text style={styles.title}>outfit 3: </Text>
-        <View style={styles.combo}>
-            <Image
-                source={require('../../assets/images/cropped.png')} 
-                style={styles.piece}
-            />
-            <Image
-                source={require('../../assets/images/cropped.png')} 
-                style={styles.piece}
-            />
-            <Image
-                source={require('../../assets/images/cropped.png')} 
-                style={styles.piece}
-            />
-        </View>
         
-        <Text style={styles.title}>outfit 4: </Text>
-        <View style={styles.combo}>
-            <Image
-                source={require('../../assets/images/cropped.png')} 
-                style={styles.piece}
-            />
-            <Image
-                source={require('../../assets/images/cropped.png')} 
-                style={styles.piece}
-            />
-            <Image
-                source={require('../../assets/images/cropped.png')} 
-                style={styles.piece}
-            />
-        </View>
-
-        <Text style={styles.title}>outfit 5: </Text>
-        <View style={styles.combo}>
-            <Image
-                source={require('../../assets/images/cropped.png')} 
-                style={styles.piece}
-            />
-            <Image
-                source={require('../../assets/images/cropped.png')} 
-                style={styles.piece}
-            />
-            <Image
-                source={require('../../assets/images/cropped.png')} 
-                style={styles.piece}
-            />
-        </View>
     </ScrollView>
     
   );
@@ -216,6 +145,17 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: '45%',
     marginBottom: 10,
+    marginHorizontal: 10,
+    
   },
+  out:{
+    flexDirection: 'row',          // Align children in a row (horizontal)
+    justifyContent: 'center',// Space images evenly
+    padding: 10,
+    borderColor: "#777777",
+    borderWidth: 2,
+    borderRadius: 20,
+    marginBottom: 30
+  }
 });
 

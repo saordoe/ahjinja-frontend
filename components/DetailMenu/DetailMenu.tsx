@@ -60,12 +60,12 @@ export const DetailMenu = (): JSX.Element => {
   return (
     <ScrollView contentContainerStyle={styles.homeMenu}>
         <View style={styles.top}>
-            <TouchableOpacity onPress={() => {console.log('Back Button pressed!');}} style={styles.backContainer}>
+            <Link href="/(tabs)/home"><TouchableOpacity onPress={() => {console.log('Back Button pressed!');}} style={styles.backContainer}>
                 <Image
                 source={require('../../assets/images/back.png')} 
                 style={styles.backIcon}
                 />
-            </TouchableOpacity>
+            </TouchableOpacity></Link>
             <Text style={styles.title}>Details</Text>
         </View>
         <Image
@@ -126,36 +126,14 @@ export const DetailMenu = (): JSX.Element => {
 
             <ScrollView contentContainerStyle={styles.scrollViewContent}
               style={{ width: '100%' , paddingHorizontal: 30}}>
-            {/* View with Image next to Text */}
             
-            
-            {/* <View style={styles.matches}>
-                <TouchableOpacity style={styles.bookmarkButton} onPress={toggleBookmark}>
-                    <Image
-                        source={
-                        bookmarked
-                            ? require('../../assets/images/bfilled.png') 
-                            : require('../../assets/images/bunfilled.png') 
-                        }
-                        style={styles.bookmarkIcon}
-                    />
-                </TouchableOpacity>
-                <Text style={styles.matchText}>1. Match one</Text>
-                <Image
-                    source={require('../../assets/images/cropped.png')} 
-                    style={[styles.match, { width: "100%" }]} 
-                />
-            </View> */}
-
-            
-
             {data.map((item) => (
                         <Match
                           key={item.id}
                           companyName={item.companyName}
                           imageSource={item.imageSource}
                           onBookmark={() => handleBookmark('top1' + ' ' + item.id)} // Handle like event
-                          bookmarked={bookmarkedItems.includes(item.id)}
+                          bookmarked={bookmarkedItems['top1 ' + item.id] === true}
                         />
                       ))}
 
@@ -198,7 +176,8 @@ export const Match = ({
 const styles = StyleSheet.create({
   homeMenu: {
     width: "100%",
-    padding: "7%"
+    padding: "7%",
+    height: "100%"
   },
   top:{
     flexDirection: 'row',           // Align items in a row (horizontally)
@@ -340,7 +319,7 @@ const styles = StyleSheet.create({
   },
   button: {
     position: 'absolute',     // Position the button absolutely
-    bottom: "-35%",               // Distance from the bottom (adjust as needed)
+    bottom: "7%",               // Distance from the bottom (adjust as needed)
     right:"12%",                 // Distance from the left side (adjust as needed)
     backgroundColor: '#888888', // Button background color (blue in this case)
     paddingVertical: 10,      // Vertical padding for button content

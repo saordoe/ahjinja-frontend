@@ -33,7 +33,6 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
   },
   card: {
-    margin: 5,
     alignItems: 'center',
     justifyContent: 'center',
     overflow: 'visible',
@@ -53,7 +52,7 @@ const styles = StyleSheet.create({
   },
   heartIconContainer: {
     position: 'absolute',
-    top: 35,
+    top: "22%",
     right: 10,
     zIndex: 1,
   },

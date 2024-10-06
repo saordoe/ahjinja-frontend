@@ -37,8 +37,9 @@ export default function TabThreeScreen() {
                 <MaterialCommunityIcons style={styles.plus__sign} name="plus" size={32} color='black' />
               </View>
             </Link>
-            <View style={styles.outfits__button}></View>
-          </View>
+            <Link href='/newScreens/outfit'><View style={styles.add__button}><MaterialCommunityIcons style={styles.plus__sign} name="wardrobe" size={32} color='black' /></View>
+            </Link>
+            </View>
         </View>
       </View>
       <View style={styles.filter__bar}>
@@ -88,7 +89,7 @@ export default function TabThreeScreen() {
             />
             </View>
           ))}
-    </View>
+      </View>
     </ScrollView>
   );
 }
@@ -124,7 +125,10 @@ const styles = StyleSheet.create({
     borderRadius: 55,
     backgroundColor: '#D9D9D9',
     paddingHorizontal: 10,
-    marginRight: 10,
+    marginTop: 5,
+    marginRight: 20,
+    marginBottom: 20,
+    alignSelf: "center"
   },
   add__button: {
     width: 80,
@@ -149,9 +153,10 @@ const styles = StyleSheet.create({
     marginTop: 15,
     flex: 1,
     flexDirection: 'row',
+    marginLeft: 10
   },
   name: {
-    marginTop: 10,
+    marginTop: 5,
     fontSize: 20,
     fontWeight: 'bold',
   },
@@ -161,6 +166,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     width: '80%',
     paddingHorizontal: 10,
+    borderRadius: 15
   },
   filter__bar: {
     flex: 1,
