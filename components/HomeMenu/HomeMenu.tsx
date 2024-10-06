@@ -7,31 +7,31 @@ const data = [
     id: '1',
     companyName: 'Company X',
     imageSource: require('../../assets/images/icon.png'),
-    link: '/details/1', // Add link destination
+    link: '/home/details/one', // Add link destination
   },
   {
     id: '2',
     companyName: 'Company Y',
     imageSource: require('../../assets/images/cropped.png'),
-    link: '/details/2', // Add link destination
+    link: '/home/details/two', // Add link destination
   },
   {
     id: '3',
     companyName: 'Company A',
     imageSource: require('../../assets/images/white2.png'),
-    link: '/details/3', // Add link destination
+    link: '/home/details/three', // Add link destination
   },
   {
     id: '4',
     companyName: 'Company B',
     imageSource: require('../../assets/images/cropped.png'),
-    link: '/details/4', // Add link destination
+    link: '/home/details/four', // Add link destination
   },
   {
     id: '5',
     companyName: 'Company B',
     imageSource: require('../../assets/images/model1.png'),
-    link: '/details/5', // Add link destination
+    link: '/home/details/five', // Add link destination
   },
 ];
 

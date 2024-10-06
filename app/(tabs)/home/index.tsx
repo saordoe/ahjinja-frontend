@@ -1,9 +1,8 @@
 import { StyleSheet } from 'react-native';
-import { Link, Href } from 'expo-router';
 
-import EditScreenInfo from '@/components/EditScreenInfo';
-import { Text, View } from '@/components/Themed';
+import { View } from '@/components/Themed';
 import { HomeMenu } from '@/components/HomeMenu/HomeMenu';
+import { Link } from 'expo-router';
 
 export default function TabOneScreen() {
   return (
