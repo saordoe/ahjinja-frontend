@@ -4,20 +4,12 @@ import { Text, View } from '@/components/Themed';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import FilterButton from '@/components/uiComponents/FilterButton';
 import CardTemplate from '@/components/uiComponents/CardTemplate';
+import useLikedCards from '@/hooks/LikedCards';
+import { CardTemplates } from '@/components/CardTemplates';
 
 export default function TabThreeScreen() {
   const [name, setName] = useState('');
-  const [liked, setLiked] = useState(false); // State to track if the card is liked
-
-  // Toggle the like status
-  const handleLike = (id: string) => {
-    setLikedCards((prevState) => ({
-      ...prevState,
-      [id]: !prevState[id], // Toggle liked state for the specific card
-    }));
-  };
-
-  const [likedCards, setLikedCards] = useState<{ [key: string]: boolean }>({});
+  const { likedCards, handleLike } = useLikedCards();
 
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer}>
@@ -74,31 +66,18 @@ export default function TabThreeScreen() {
         />
       </View>
       <View style={styles.cards__container}>
-        <View style={styles.cards__row}>
-          <CardTemplate
-            id="1"
-            companyName="lololol"
-            imageSource={require('../../assets/images/cropped.png')}
-            onLike={handleLike}
-            liked={likedCards['1'] || false} // Default to false if not liked
-          />
-          <CardTemplate
-            id="2"
-            companyName="lololol"
-            imageSource={require('../../assets/images/cropped.png')}
-            onLike={handleLike}
-            liked={likedCards['2'] || false} // Default to false if not liked
-          />
-        </View>
-        <View style={styles.cards__row}>
-          <CardTemplate
-            id="3"
-            companyName="lololol"
-            imageSource={require('../../assets/images/cropped.png')}
-            onLike={handleLike}
-            liked={likedCards['3'] || false} // Default to false if not liked
-          />
-        </View>
+          {CardTemplates.map((template) => (
+            <View style={styles.cards__grid}>
+            <CardTemplate
+              key={template.id}
+              id={template.id}
+              companyName={template.companyName}
+              imageSource={template.imageSource}
+              onLike={handleLike}
+              liked={likedCards[template.id] || false}
+            />
+            </View>
+          ))}
     </View>
     </ScrollView>
   );
@@ -125,7 +104,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between'
   },
   icons__rightcontainer: {
-    marginLeft: 10,
+
     flexDirection: 'column',
     alignItems: 'center',
   },
@@ -155,7 +134,6 @@ const styles = StyleSheet.create({
     height: 110,
     borderRadius: 20,
     backgroundColor: '#EFEFEF',
-    marginRight: 10,
   },
   buttons__container: {
     marginTop: 15,
@@ -182,17 +160,18 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   cards__container: {
-    flexDirection: 'column',
-    justifyContent: 'flex-start',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
     alignItems: 'center',
     width: '100%',
-    paddingHorizontal: 10,
     paddingVertical: 20,
+    paddingRight: 35,
+    paddingLeft: 20
   },
-  cards__row: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: '100%',
+  cards__grid: {
+    justifyContent: 'center',
+    width: '45%',
     marginBottom: 10,
   },
 });

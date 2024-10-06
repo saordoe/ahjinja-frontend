@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 
-interface CardProps {
+export interface CardProps {
   id: string;
   companyName: string;
   imageSource: any;
@@ -34,18 +34,18 @@ const styles = StyleSheet.create({
   },
   card: {
     margin: 5,
-    alignItems: 'flex-start',
+    alignItems: 'center',
     justifyContent: 'center',
-    paddingLeft: 5,
-    overflow: 'hidden',
-    width: '45%',
+    overflow: 'visible',
+    width: '100%',
   },
   cardImage: {
     width: '100%',
     height: undefined,
     aspectRatio: 1,
     borderRadius: 20,
-    resizeMode: 'cover',
+    resizeMode: 'contain',
+    backgroundColor: 'white',
   },
   cardText: {
     fontWeight: 'bold',
@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
   },
   heartIconContainer: {
     position: 'absolute',
-    top: 10,
+    top: 35,
     right: 10,
     zIndex: 1,
   },
