@@ -6,6 +6,7 @@ import FilterButton from '@/components/uiComponents/FilterButton';
 import CardTemplate from '@/components/uiComponents/CardTemplate';
 import { useLikedCards } from '@/contexts/LikedCardsContext'; 
 import { CardTemplates } from '@/components/CardTemplates';
+import { Link, Href } from 'expo-router';
 
 export default function TabThreeScreen() {
   const [name, setName] = useState('');
@@ -31,9 +32,11 @@ export default function TabThreeScreen() {
         <View style={styles.icons__rightcontainer}>
           <Text style={styles.name}>{name ? `${name}'s Closet` : "Name's Closet"}</Text>
           <View style={styles.buttons__container}>
-            <View style={styles.add__button}>
-              <MaterialCommunityIcons style={styles.plus__sign} name="plus" size={32} color='black' />
-            </View>
+            <Link href='/three/uploadone'>
+              <View style={styles.add__button}>
+                <MaterialCommunityIcons style={styles.plus__sign} name="plus" size={32} color='black' />
+              </View>
+            </Link>
             <View style={styles.outfits__button}></View>
           </View>
         </View>
@@ -78,7 +81,7 @@ export default function TabThreeScreen() {
             <CardTemplate
               key={template.id}
               id={template.id}
-              companyName=''
+              companyName={template.companyName}
               imageSource={template.imageSource}
               onLike={handleLike}
               liked={likedCards[template.id] || false}
