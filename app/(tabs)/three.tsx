@@ -4,7 +4,7 @@ import { Text, View } from '@/components/Themed';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import FilterButton from '@/components/uiComponents/FilterButton';
 import CardTemplate from '@/components/uiComponents/CardTemplate';
-import useLikedCards from '@/hooks/LikedCards';
+import { useLikedCards } from '@/contexts/LikedCardsContext'; 
 import { CardTemplates } from '@/components/CardTemplates';
 
 export default function TabThreeScreen() {
