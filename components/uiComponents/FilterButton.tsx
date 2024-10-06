@@ -1,8 +1,14 @@
 import React from 'react';
 import { TouchableOpacity, Text, StyleSheet } from 'react-native';
-import PropTypes from 'prop-types';
 
-const FilterButton = ({ size, color, text, onPress }) => {
+interface FilterButtonProps {
+  size?: 'small' | 'medium' | 'large';
+  color?: string;
+  text: string;
+  onPress?: () => void; // Function that returns void
+}
+
+const FilterButton: React.FC<FilterButtonProps> = ({ size = 'medium', color = '#EFEFEF', text, onPress }) => {
   const buttonSize = size === 'large' ? 80 : size === 'medium' ? 60 : 40;
 
   return (
@@ -28,18 +34,5 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
 });
-
-FilterButton.propTypes = {
-  size: PropTypes.oneOf(['small', 'medium', 'large']),
-  color: PropTypes.string,
-  text: PropTypes.string.isRequired,
-  onPress: PropTypes.func, // To handle button clicks
-};
-
-FilterButton.defaultProps = {
-  size: 'medium',
-  color: '#EFEFEF',
-  onPress: () => {}, // Default to no-op if not provided
-};
 
 export default FilterButton;

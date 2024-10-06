@@ -1,18 +1,21 @@
-import { StyleSheet, TextInput } from 'react-native';
+import { StyleSheet, TextInput, ScrollView } from 'react-native';
 import { useState } from 'react';
-
-import EditScreenInfo from '@/components/EditScreenInfo';
 import { Text, View } from '@/components/Themed';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import FilterButton from '@/components/uiComponents/FilterButton';
-
+import CardTemplate from '@/components/uiComponents/CardTemplate';
 
 export default function TabThreeScreen() {
-
   const [name, setName] = useState('');
+  const [liked, setLiked] = useState(false); // State to track if the card is liked
+
+  // Toggle the like status
+  const handleLike = () => {
+    setLiked((prevLiked) => !prevLiked);
+  };
 
   return (
-    <View style={styles.container}>
+    <ScrollView contentContainerStyle={styles.scrollContainer}>
       <TextInput
         style={styles.input}
         placeholder="Enter your name"
@@ -25,7 +28,7 @@ export default function TabThreeScreen() {
           <Text style={styles.name}>{name ? `${name}'s Closet` : "Name's Closet"}</Text>
           <View style={styles.buttons__container}>
             <View style={styles.add__button}>
-              <MaterialCommunityIcons style={styles.plus__sign} name="plus" size={32} color='black'/>
+              <MaterialCommunityIcons style={styles.plus__sign} name="plus" size={32} color='black' />
             </View>
             <View style={styles.outfits__button}></View>
           </View>
@@ -37,7 +40,7 @@ export default function TabThreeScreen() {
           color="#7C7777"
           text="All"
           onPress={() => {
-            console.log('Button pressed!');
+            console.log('Button pressed!'); //temporary, will later filter the clothes to show all
           }}
         />
         <FilterButton
@@ -45,7 +48,7 @@ export default function TabThreeScreen() {
           color="#7C7777"
           text="Top"
           onPress={() => {
-            console.log('Button pressed!');
+            console.log('Button pressed!'); //temporary, will later filter the clothes to show tops
           }}
         />
         <FilterButton
@@ -65,11 +68,48 @@ export default function TabThreeScreen() {
           }}
         />
       </View>
-    </View>
+      <View style={styles.cards__container}>
+        <View style={styles.cards__row}>
+          <CardTemplate
+            companyName="lololol"
+            imageSource={require('../../assets/images/cropped.png')}
+            onLike={handleLike}
+            liked={liked}
+          />
+          <CardTemplate
+            companyName="lololol"
+            imageSource={require('../../assets/images/cropped.png')}
+            onLike={handleLike}
+            liked={liked}
+          />
+        </View>
+        <View style={styles.cards__row}>
+          <CardTemplate
+            companyName="lololol"
+            imageSource={require('../../assets/images/cropped.png')}
+            onLike={handleLike}
+            liked={liked}
+          />
+          <CardTemplate
+            companyName="lololol"
+            imageSource={require('../../assets/images/cropped.png')}
+            onLike={handleLike}
+            liked={liked}
+          />
+        </View>
+      </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
+  scrollContainer: {
+    flexGrow: 1, // Ensure ScrollView content takes up space
+    alignItems: 'center', // Center items horizontally
+    justifyContent: 'flex-start',
+    paddingVertical: 20,
+    backgroundColor: '#fff',
+  },
   container: {
     flex: 1,
     alignItems: 'center',
@@ -77,7 +117,7 @@ const styles = StyleSheet.create({
   },
   icons__container: {
     marginTop: 20,
-    flex:1,
+    flex: 1,
     alignContent: 'center',
     flexDirection: 'row',
     justifyContent: 'space-between'
@@ -88,19 +128,18 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   circle: {
-    width: 110, // diameter of the circle
-    height: 110, // diameter of the circle
-    borderRadius: 55, // half of the diameter to make it a circle
-    backgroundColor: '#D9D9D9', // color of the circle
+    width: 110,
+    height: 110,
+    borderRadius: 55,
+    backgroundColor: '#D9D9D9',
     paddingHorizontal: 10,
     marginRight: 10,
-    
   },
   add__button: {
-    width: 80, // diameter of the circle
-    height: 70, // diameter of the circle
-    borderRadius: 20, // half of the diameter to make it a circle
-    backgroundColor: '#EFEFEF', // color of the circle
+    width: 80,
+    height: 70,
+    borderRadius: 20,
+    backgroundColor: '#EFEFEF',
     marginRight: 10,
     alignItems: 'center',
     justifyContent: 'center',
@@ -110,10 +149,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   outfits__button: {
-    width: 90, // diameter of the circle
-    height: 110, // diameter of the circle
-    borderRadius: 20, // half of the diameter to make it a circle
-    backgroundColor: '#EFEFEF', // color of the circle
+    width: 90,
+    height: 110,
+    borderRadius: 20,
+    backgroundColor: '#EFEFEF',
     marginRight: 10,
   },
   buttons__container: {
@@ -139,5 +178,19 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     width: '88%',
     marginTop: 20,
+  },
+  cards__container: {
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    width: '100%',
+    paddingHorizontal: 10,
+    paddingVertical: 20,
+  },
+  cards__row: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+    marginBottom: 10,
   },
 });
