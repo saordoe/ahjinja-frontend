@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, Image, StyleSheet, ScrollView, TextInput, TouchableOpacity } from "react-native";
+import React from "react";
+import { View, Text, Image, StyleSheet, ScrollView, FlatList } from "react-native";
 import buttons from "assets/images/buttons.png";
 import heart from "../../assets/images/heart.svg";
 import home from "../../assets/images/home.svg";
