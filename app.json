@@ -31,6 +31,12 @@
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "de59b272-8d3a-4642-948b-658a509079a3"
+      }
+    },
+    "owner": "kestelle"
   }
 }

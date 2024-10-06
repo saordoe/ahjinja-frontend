@@ -1,32 +1,37 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { View, Text, Image, TextInput, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
-
+import { Link, Href } from 'expo-router';
 
 const data = [
   {
     id: '1',
     companyName: 'Company X',
     imageSource: require('../../assets/images/icon.png'),
+    link: '/home/details/one', // Add link destination
   },
   {
     id: '2',
     companyName: 'Company Y',
     imageSource: require('../../assets/images/cropped.png'),
+    link: '/home/details/two', // Add link destination
   },
   {
     id: '3',
     companyName: 'Company A',
     imageSource: require('../../assets/images/white2.png'),
+    link: '/home/details/three', // Add link destination
   },
   {
     id: '4',
     companyName: 'Company B',
     imageSource: require('../../assets/images/cropped.png'),
+    link: '/home/details/four', // Add link destination
   },
   {
     id: '5',
     companyName: 'Company B',
     imageSource: require('../../assets/images/model1.png'),
+    link: '/home/details/five', // Add link destination
   },
 ];
 
@@ -44,15 +49,13 @@ const splitDataIntoColumns = (data: any[]) => {
   return { leftColumn, rightColumn };
 };
 
-
 export const HomeMenu = (): JSX.Element => {
   const { leftColumn, rightColumn } = splitDataIntoColumns(data);
   const [searchText, setSearchText] = useState(''); // Search text state
   const [likedItems, setLikedItems] = useState<string[]>([]); // State to track liked items
 
-
-   // Handle like button click
-   const handleLike = (id: string) => {
+  // Handle like button click
+  const handleLike = (id: string) => {
     if (likedItems.includes(id)) {
       setLikedItems(likedItems.filter(item => item !== id)); // Remove item if already liked
     } else {
@@ -62,8 +65,8 @@ export const HomeMenu = (): JSX.Element => {
 
   return (
     <View>
-    
-    <View style={styles.searchBarContainer}>
+      
+      <View style={styles.searchBarContainer}>
         <TextInput
           style={styles.searchBar}
           placeholder="Search..."
@@ -71,50 +74,49 @@ export const HomeMenu = (): JSX.Element => {
           onChangeText={setSearchText} // Update searchText state on input change
         />
       </View>
-    <ScrollView contentContainerStyle={styles.homeMenu}>
-      <View style={styles.homeMenu}>
-      <View style={styles.div}>
-        <View style={styles.overlap}>
-          <View style={styles.body}>
-            <View style={styles.overlapGroup}>
 
-              {/* <View style={styles.overlap2}>
-                <Card companyName="a" imageSource={require('../../assets/images/icon.png')}/>
-                <Card companyName="b" imageSource={require('../../assets/images/whitecrop.png')}/>
-                <Card companyName="c" imageSource={require('../../assets/images/white2.png')}/>
-                <Card companyName="d" imageSource={require('../../assets/images/blacktop.png')}/>
-            
-                <Image style={styles.icon} source={image} />
-              </View> */}
-
-
-              <View style={styles.overlap2}>
-                      {/* Left Column */}
-                      <View style={styles.column}>
-                        {leftColumn.map((item) => (
-                          <Card key={item.id} companyName={item.companyName} imageSource={item.imageSource} onLike={() => handleLike(item.id)} // Handle like event
-              liked={likedItems.includes(item.id)}/>
-                        ))}
-                      </View>
-                      
-                      {/* Right Column */}
-                      <View style={styles.column}>
-                        {rightColumn.map((item) => (
-                          <Card key={item.id} companyName={item.companyName} imageSource={item.imageSource} onLike={() => handleLike(item.id)} // Handle like event
-                          liked={likedItems.includes(item.id)}/>
-                        ))}
-                      </View>
+      <ScrollView contentContainerStyle={styles.homeMenu}>
+        <View style={styles.homeMenu}>
+          <View style={styles.div}>
+            <View style={styles.overlap}>
+              <View style={styles.body}>
+                <View style={styles.overlapGroup}>
+                  <View style={styles.overlap2}>
+                    {/* Left Column */}
+                    <View style={styles.column}>
+                      {leftColumn.map((item) => (
+                        <Card
+                          key={item.id}
+                          companyName={item.companyName}
+                          imageSource={item.imageSource}
+                          link={item.link} // Pass link destination
+                          onLike={() => handleLike(item.id)} // Handle like event
+                          liked={likedItems.includes(item.id)}
+                        />
+                      ))}
                     </View>
 
-
+                    {/* Right Column */}
+                    <View style={styles.column}>
+                      {rightColumn.map((item) => (
+                        <Card
+                          key={item.id}
+                          companyName={item.companyName}
+                          imageSource={item.imageSource}
+                          link={item.link} // Pass link destination
+                          onLike={() => handleLike(item.id)} // Handle like event
+                          liked={likedItems.includes(item.id)}
+                        />
+                      ))}
+                    </View>
+                  </View>
+                </View>
+              </View>
             </View>
           </View>
         </View>
-      </View>
-      </View>
-    </ScrollView>
+      </ScrollView>
     </View>
-    
   );
 };
 
@@ -135,13 +137,12 @@ const styles = StyleSheet.create({
     // Add your styles here
   },
   overlap2: {
-    // Add your styles here
-    display: 'flex',          // Enables Flexbox layout
-    flexDirection: 'row',     // This makes the items go in a row (horizontal)
-    flexWrap: 'wrap',         // Allows items to wrap into multiple rows
+    display: 'flex', // Enables Flexbox layout
+    flexDirection: 'row', // This makes the items go in a row (horizontal)
+    flexWrap: 'wrap', // Allows items to wrap into multiple rows
     justifyContent: 'center', // Centers the items horizontally
-    alignItems: 'flex-start',     // Centers the items vertically (within their row)
-    width: '100%'
+    alignItems: 'flex-start', // Centers the items vertically (within their row)
+    width: '100%',
   },
   supportingText: {
     // Add your styles here
@@ -151,20 +152,18 @@ const styles = StyleSheet.create({
   },
   card: {
     margin: 5,
-    //width: '45%', 
-    alignItems: 'flex-start',     // Centers the content of each item horizontally
-    justifyContent: 'center', 
+    alignItems: 'flex-start', // Centers the content of each item horizontally
+    justifyContent: 'center',
     paddingLeft: 5,
-    overflow: 'hidden', 
+    overflow: 'hidden',
   },
   cardImage: {
-    width: "100%",
+    width: '100%',
     height: undefined,
     aspectRatio: 1,
     borderRadius: 20,
-    resizeMode: 'cover'
+    resizeMode: 'cover',
   },
-
   cardText: {
     alignItems: 'center',
     backgroundColor: 'white',
@@ -184,9 +183,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff', // White background inside the search bar
   },
   column: {
-    //flex: 1, // Each column takes up half the width
     marginHorizontal: 5, // Add space between columns
-    width: "45%",
+    width: '45%',
   },
   heartIcon: {
     position: 'absolute', // Absolute positioning for the heart icon
@@ -195,29 +193,40 @@ const styles = StyleSheet.create({
     width: 30, // Size of the heart icon
     height: 30,
     zIndex: 1, // Ensures it appears on top of the card
-
-
   },
   heartIconContainer: {
     position: 'absolute', // Absolute positioning for the heart icon
     top: 10, // Position it inside the card, near the top
-    right:0, // Position it inside the card, near the right edge
+    right: 0, // Position it inside the card, near the right edge
     zIndex: 1, // Ensures it appears on top of the card
   },
 });
 
-export const Card = ({ companyName, imageSource, onLike, liked }: { companyName: string; imageSource: any; onLike: () => void; liked: boolean }): JSX.Element => {
+export const Card = ({
+  companyName,
+  imageSource,
+  link,
+  onLike,
+  liked,
+}: {
+  companyName: string;
+  imageSource: any;
+  link: string;
+  onLike: () => void;
+  liked: boolean;
+}): JSX.Element => {
   return (
     <View style={styles.card}>
       <Text style={styles.cardText}>@ {companyName}</Text>
-      <Image style={styles.cardImage} source={imageSource} />
+      <Link href={link as Href}>
+        <Image style={styles.cardImage} source={imageSource} />
+      </Link>
       <TouchableOpacity onPress={onLike} style={styles.heartIconContainer}>
         <Image
-          source={liked ? require('../../assets/images/filled.png') : require('../../assets/images/whiteheart.png')} 
+          source={liked ? require('../../assets/images/filled.png') : require('../../assets/images/whiteheart.png')}
           style={styles.heartIcon}
         />
       </TouchableOpacity>
-      
     </View>
   );
 };

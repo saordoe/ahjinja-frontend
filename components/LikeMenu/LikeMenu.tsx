@@ -1,62 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, Image, StyleSheet, ScrollView } from "react-native";
-
-const data = [
-  {
-    id: '1',
-    imageSource: require('../../assets/images/icon.png'),
-  },
-  {
-    id: '2',
-    imageSource: require('../../assets/images/cropped.png'),
-  },
-  {
-    id: '3',
-    imageSource: require('../../assets/images/white2.png'),
-  },
-  {
-    id: '4',
-    imageSource: require('../../assets/images/cropped.png'),
-  },
-  {
-    id: '5',
-    imageSource: require('../../assets/images/model1.png'),
-  },
-];
-
-// Split the data into two columns
-const splitDataIntoColumns = (data: any[]) => {
-  const leftColumn = [];
-  const rightColumn = [];
-  for (let i = 0; i < data.length; i++) {
-    if (i % 2 === 0) {
-      leftColumn.push(data[i]); // Add to left column
-    } else {
-      rightColumn.push(data[i]); // Add to right column
-    }
-  }
-  return { leftColumn, rightColumn };
-};
-
+import CardTemplate from '@/components/uiComponents/CardTemplate';
+import { useLikedCards } from '@/contexts/LikedCardsContext'; 
+import { CardTemplates } from '@/components/CardTemplates';
 
 export const LikeMenu = (): JSX.Element => {
-  const { leftColumn, rightColumn } = splitDataIntoColumns(data);
+  const { likedCards, handleLike } = useLikedCards();
+  const filteredCards = CardTemplates.filter((template) => likedCards[template.id]);
   return (
     <ScrollView contentContainerStyle={styles.homeMenu}>
               <View style={styles.overlap2}>
-                      {/* Left Column */}
-                      <View style={styles.column}>
-                        {leftColumn.map((item) => (
-                          <Card key={item.id} imageSource={item.imageSource} />
-                        ))}
-                      </View>
-                      
-                      {/* Right Column */}
-                      <View style={styles.column}>
-                        {rightColumn.map((item) => (
-                          <Card key={item.id} imageSource={item.imageSource} />
-                        ))}
-                      </View>
+              <View style={styles.cards__container}>
+              {filteredCards.map((template) => (
+              <View key={template.id} style={styles.cards__grid}>
+                <CardTemplate
+                  id={template.id}
+                  companyName={template.companyName}
+                  imageSource={template.imageSource}
+                  onLike={handleLike}
+                  liked={likedCards[template.id] || false}
+                />
+              </View>
+            ))}
+    </View>
                 </View>
     </ScrollView>
     
@@ -108,6 +74,21 @@ const styles = StyleSheet.create({
     height: 25,
     zIndex: 1, // Ensures it appears on top of the card
 
+  },
+  cards__container: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    width: '100%',
+    paddingVertical: 20,
+    paddingRight: 35,
+    paddingLeft: 20
+  },
+  cards__grid: {
+    justifyContent: 'center',
+    width: '45%',
+    marginBottom: 10,
   },
 });
 
