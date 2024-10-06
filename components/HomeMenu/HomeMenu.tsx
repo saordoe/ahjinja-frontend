@@ -1,12 +1,6 @@
-import React from "react";
-import { View, Text, Image, StyleSheet, ScrollView, FlatList } from "react-native";
-import buttons from "assets/images/buttons.png";
-import heart from "../../assets/images/heart.svg";
-import home from "../../assets/images/home.svg";
-import icon from "../../assets/images/icon.svg";
-import image from "../../assets/images/image.svg";
-import liked from "../../assets/images/liked.svg";
-// var imageVar = require('../../assets/images/image.svg');
+import React, { useState, useEffect } from 'react';
+import { View, Text, Image, TextInput, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+
 
 const data = [
   {
@@ -17,7 +11,7 @@ const data = [
   {
     id: '2',
     companyName: 'Company Y',
-    imageSource: require('../../assets/images/whitecrop.png'),
+    imageSource: require('../../assets/images/cropped.png'),
   },
   {
     id: '3',
@@ -27,28 +21,63 @@ const data = [
   {
     id: '4',
     companyName: 'Company B',
-    imageSource: require('../../assets/images/blacktop.png'),
+    imageSource: require('../../assets/images/cropped.png'),
   },
   {
     id: '5',
     companyName: 'Company B',
-    imageSource: require('../../assets/images/white3.png'),
-  },
-  {
-    id: '6',
-    companyName: 'Company B',
-    imageSource: require('../../assets/images/white3.png'),
+    imageSource: require('../../assets/images/model1.png'),
   },
 ];
 
+// Split the data into two columns
+const splitDataIntoColumns = (data: any[]) => {
+  const leftColumn = [];
+  const rightColumn = [];
+  for (let i = 0; i < data.length; i++) {
+    if (i % 2 === 0) {
+      leftColumn.push(data[i]); // Add to left column
+    } else {
+      rightColumn.push(data[i]); // Add to right column
+    }
+  }
+  return { leftColumn, rightColumn };
+};
+
+
 export const HomeMenu = (): JSX.Element => {
+  const { leftColumn, rightColumn } = splitDataIntoColumns(data);
+  const [searchText, setSearchText] = useState(''); // Search text state
+  const [likedItems, setLikedItems] = useState<string[]>([]); // State to track liked items
+
+
+   // Handle like button click
+   const handleLike = (id: string) => {
+    if (likedItems.includes(id)) {
+      setLikedItems(likedItems.filter(item => item !== id)); // Remove item if already liked
+    } else {
+      setLikedItems([...likedItems, id]); // Add item to liked list
+    }
+  };
+
   return (
-    // <ScrollView contentContainerStyle={styles.homeMenu}>
+    <View>
+    
+    <View style={styles.searchBarContainer}>
+        <TextInput
+          style={styles.searchBar}
+          placeholder="Search..."
+          value={searchText}
+          onChangeText={setSearchText} // Update searchText state on input change
+        />
+      </View>
+    <ScrollView contentContainerStyle={styles.homeMenu}>
       <View style={styles.homeMenu}>
       <View style={styles.div}>
         <View style={styles.overlap}>
           <View style={styles.body}>
             <View style={styles.overlapGroup}>
+
               {/* <View style={styles.overlap2}>
                 <Card companyName="a" imageSource={require('../../assets/images/icon.png')}/>
                 <Card companyName="b" imageSource={require('../../assets/images/whitecrop.png')}/>
@@ -57,21 +86,34 @@ export const HomeMenu = (): JSX.Element => {
             
                 <Image style={styles.icon} source={image} />
               </View> */}
-              <FlatList
-                data={data}
-                renderItem={({ item }) => (
-                  <Card companyName={item.companyName} imageSource={item.imageSource} />
-                )}
-                keyExtractor={(item) => item.id}
-                numColumns={2}
-                columnWrapperStyle={styles.row}
-              />
+
+
+              <View style={styles.overlap2}>
+                      {/* Left Column */}
+                      <View style={styles.column}>
+                        {leftColumn.map((item) => (
+                          <Card key={item.id} companyName={item.companyName} imageSource={item.imageSource} onLike={() => handleLike(item.id)} // Handle like event
+              liked={likedItems.includes(item.id)}/>
+                        ))}
+                      </View>
+                      
+                      {/* Right Column */}
+                      <View style={styles.column}>
+                        {rightColumn.map((item) => (
+                          <Card key={item.id} companyName={item.companyName} imageSource={item.imageSource} onLike={() => handleLike(item.id)} // Handle like event
+                          liked={likedItems.includes(item.id)}/>
+                        ))}
+                      </View>
+                    </View>
+
+
             </View>
           </View>
         </View>
       </View>
+      </View>
+    </ScrollView>
     </View>
-    // </ScrollView>
     
   );
 };
@@ -98,7 +140,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',     // This makes the items go in a row (horizontal)
     flexWrap: 'wrap',         // Allows items to wrap into multiple rows
     justifyContent: 'center', // Centers the items horizontally
-    alignItems: 'center',     // Centers the items vertically (within their row)
+    alignItems: 'flex-start',     // Centers the items vertically (within their row)
     width: '100%'
   },
   supportingText: {
@@ -109,7 +151,7 @@ const styles = StyleSheet.create({
   },
   card: {
     margin: 5,
-    width: '45%', 
+    //width: '45%', 
     alignItems: 'flex-start',     // Centers the content of each item horizontally
     justifyContent: 'center', 
     paddingLeft: 5,
@@ -118,27 +160,63 @@ const styles = StyleSheet.create({
   cardImage: {
     width: "100%",
     height: undefined,
-    borderRadius: 20,
     aspectRatio: 1,
-    resizeMode: 'contain',
+    borderRadius: 20,
+    resizeMode: 'cover'
   },
 
   cardText: {
     alignItems: 'center',
     backgroundColor: 'white',
     fontWeight: 'bold',
-    margin: 5
+    margin: 5,
   },
-  row: {
-    justifyContent: 'space-between',
-    marginBottom: 5,
-  }
+  searchBarContainer: {
+    padding: 20, // Padding around the search bar
+    backgroundColor: '#ffffff', // Light background color for contrast
+  },
+  searchBar: {
+    height: 40, // Height of the search bar
+    borderColor: '#ddd', // Border color
+    borderWidth: 1, // Border width
+    borderRadius: 20, // Rounded corners
+    paddingHorizontal: 15, // Padding inside the search bar for better UX
+    backgroundColor: '#fff', // White background inside the search bar
+  },
+  column: {
+    //flex: 1, // Each column takes up half the width
+    marginHorizontal: 5, // Add space between columns
+    width: "45%",
+  },
+  heartIcon: {
+    position: 'absolute', // Absolute positioning for the heart icon
+    top: 25, // Position it near the top
+    right: 10, // Position it near the right edge
+    width: 30, // Size of the heart icon
+    height: 30,
+    zIndex: 1, // Ensures it appears on top of the card
+
+
+  },
+  heartIconContainer: {
+    position: 'absolute', // Absolute positioning for the heart icon
+    top: 10, // Position it inside the card, near the top
+    right:0, // Position it inside the card, near the right edge
+    zIndex: 1, // Ensures it appears on top of the card
+  },
 });
-export const Card = ({ companyName, imageSource }: { companyName: string; imageSource: any }): JSX.Element => {
+
+export const Card = ({ companyName, imageSource, onLike, liked }: { companyName: string; imageSource: any; onLike: () => void; liked: boolean }): JSX.Element => {
   return (
     <View style={styles.card}>
       <Text style={styles.cardText}>@ {companyName}</Text>
       <Image style={styles.cardImage} source={imageSource} />
+      <TouchableOpacity onPress={onLike} style={styles.heartIconContainer}>
+        <Image
+          source={liked ? require('../../assets/images/filled.png') : require('../../assets/images/whiteheart.png')} 
+          style={styles.heartIcon}
+        />
+      </TouchableOpacity>
       
     </View>
   );
