@@ -8,9 +8,6 @@ import { HomeMenu } from '@/components/HomeMenu/HomeMenu';
 export default function TabOneScreen() {
   return (
     <View style={styles.container}>
-      <Link href={"/list/1" as Href}>Link One</Link>
-      <Link href={"/list/2" as Href}>Link two</Link>
-      <Link href={"/list/3" as Href}>Link three</Link>
       <HomeMenu />
     </View>
   );
